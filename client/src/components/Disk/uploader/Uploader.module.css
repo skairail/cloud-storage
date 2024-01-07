@@ -1,0 +1,58 @@
+/* Uploader.module.css */
+
+.uploader {
+  height: 300px;
+  width: 300px;
+  position: fixed;
+  background-color: #566885;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
+  border-radius: 12px;
+  overflow-y: auto;
+}
+
+.uploaderHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.uploaderTitle {
+  color: #e9e6e6;
+  font-size: 1.2rem;
+}
+
+.uploaderClose {
+  padding: 3px;
+}
+
+.uploadFile {
+  background-color: #e9e6e6;
+  border-radius: 8px;
+  margin: 5px 0;
+  padding: 5px 10px;
+}
+
+.uploadFileHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.uploadFileProgressBar {
+  height: 1rem;
+  border-radius: 8px;
+  background-color: #566885;
+  display: flex;
+  margin: 3px 0;
+}
+
+.uploadFileUploadBar {
+  background-color: green;
+  border-radius: 8px;
+}
+
+.uploadFilePercent {
+  color: #e9e6e6;
+  left: 50%;
+  position: absolute;
+}

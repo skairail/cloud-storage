@@ -1,0 +1,51 @@
+/* FileList.module.css */
+
+.fileList {
+  margin: 20px 0;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.fileListHeader {
+  display: grid;
+  grid-template-columns: 1fr 4fr repeat(4, 1fr);
+}
+
+.fileListName {
+  grid-column-start: 2;
+}
+
+.fileListDate {
+  grid-column-start: 5;
+  justify-self: center;
+}
+
+.fileListSize {
+  grid-column-start: 6;
+  justify-self: center;
+}
+
+.filePlate {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.fileEnterActive {
+  animation: fileEnter 500ms forwards;
+}
+
+@keyframes fileEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
