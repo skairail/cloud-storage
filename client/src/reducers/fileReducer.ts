@@ -1,14 +1,19 @@
-interface File {
+type File = {
   _id: string;
-}
+};
 
-interface FileReducerState {
+type FileState = {
   files: File[];
   currentDir: string | null;
   popupDisplay: string;
   dirStack: string[];
   view: string;
-}
+};
+
+type ActionPayload = {
+  type: string;
+  payload: any;
+};
 
 const SET_FILES = "SET_FILES";
 const SET_CURRENT_DIR = "SET_CURRENT_DIR";
@@ -18,30 +23,7 @@ const PUSH_TO_STACK = "PUSH_TO_STACK";
 const DELETE_FILE = "DELETE_FILE";
 const SET_VIEW = "SET_VIEW";
 
-export const setFiles = (files: File[]) => ({
-  type: SET_FILES,
-  payload: files,
-});
-export const setCurrentDir = (dir: string | null) => ({
-  type: SET_CURRENT_DIR,
-  payload: dir,
-});
-export const addFile = (file: File) => ({ type: ADD_FILE, payload: file });
-export const setPopupDisplay = (display: string) => ({
-  type: SET_POPUP_DISPLAY,
-  payload: display,
-});
-export const pushToStack = (dir: string) => ({
-  type: PUSH_TO_STACK,
-  payload: dir,
-});
-export const deleteFileAction = (dirId: string) => ({
-  type: DELETE_FILE,
-  payload: dirId,
-});
-export const setFileView = (payload: string) => ({ type: SET_VIEW, payload });
-
-const defaultState: FileReducerState = {
+const defaultState: FileState = {
   files: [],
   currentDir: null,
   popupDisplay: "none",
@@ -49,10 +31,10 @@ const defaultState: FileReducerState = {
   view: "list",
 };
 
-export default function fileReducer(
-  state: FileReducerState = defaultState,
-  action: any
-): FileReducerState {
+const fileReducer = (
+  state: FileState = defaultState,
+  action: ActionPayload
+): FileState => {
   switch (action.type) {
     case SET_FILES:
       return { ...state, files: action.payload };
@@ -67,11 +49,42 @@ export default function fileReducer(
     case DELETE_FILE:
       return {
         ...state,
-        files: state.files.filter((file) => file._id !== action.payload),
+        files: [...state.files.filter((file) => file._id !== action.payload)],
       };
     case SET_VIEW:
       return { ...state, view: action.payload };
     default:
       return state;
   }
-}
+};
+
+export const setFiles = (files: File[]): ActionPayload => ({
+  type: SET_FILES,
+  payload: files,
+});
+export const setCurrentDir = (dir: string | null): ActionPayload => ({
+  type: SET_CURRENT_DIR,
+  payload: dir,
+});
+export const addFile = (file: File): ActionPayload => ({
+  type: ADD_FILE,
+  payload: file,
+});
+export const setPopupDisplay = (display: string): ActionPayload => ({
+  type: SET_POPUP_DISPLAY,
+  payload: display,
+});
+export const pushToStack = (dir: string): ActionPayload => ({
+  type: PUSH_TO_STACK,
+  payload: dir,
+});
+export const deleteFileAction = (dirId: string): ActionPayload => ({
+  type: DELETE_FILE,
+  payload: dirId,
+});
+export const setFileView = (payload: string): ActionPayload => ({
+  type: SET_VIEW,
+  payload,
+});
+
+export default fileReducer;
