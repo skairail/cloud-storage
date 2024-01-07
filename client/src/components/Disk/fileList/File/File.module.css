@@ -1,0 +1,71 @@
+/* Assuming you have a CSS module structure */
+
+.file {
+  margin: 10px 0;
+  border-bottom: solid 2px #566885;
+  display: grid;
+  grid-template-columns: 1fr 4fr repeat(4, 1fr);
+  align-items: center;
+}
+
+.file:hover {
+  transform: scale(1.02);
+}
+
+.fileImg {
+  justify-self: center;
+}
+
+.fileDate {
+  grid-column-start: 5;
+  justify-self: center;
+}
+
+.fileSize {
+  grid-column-start: 6;
+  justify-self: center;
+}
+
+.fileBtn {
+  display: none;
+}
+
+.file:hover .fileDate {
+  grid-column-start: 3;
+}
+
+.file:hover .fileSize {
+  grid-column-start: 4;
+}
+
+.file:hover .fileDownload {
+  grid-column-start: 5;
+  display: block;
+}
+
+.file:hover .fileDelete {
+  grid-column-start: 6;
+  display: block;
+}
+
+.filePlate {
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filePlateImg {
+  height: 100px;
+  width: 100px;
+}
+
+.filePlateBtns {
+  display: none;
+}
+
+.filePlate:hover .filePlateBtns {
+  display: flex;
+}
