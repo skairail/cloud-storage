@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Input from "../../utils/Input";
+import Input from "../../utils/Input/Input";
 import { registration } from "../../actions/user";
 import styles from "./Authorization.module.css";
 const Registration = () => {
