@@ -8,7 +8,7 @@ import {
 import { hideLoader, showLoader } from "../reducers/appReducer";
 import { API_URL } from "../config";
 
-export const getFiles = (dirId: string | null, sort: string | null) => {
+export const getFiles = (dirId?: string, sort?: string) => {
   return async (dispatch: any) => {
     try {
       dispatch(showLoader());
