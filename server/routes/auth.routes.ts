@@ -1,9 +1,12 @@
 import { Router, Request, Response } from "express";
-import User from "../models/User";
-import bcrypt from "bcryptjs";
 import { check, validationResult } from "express-validator";
-import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import config from "config";
+import jwt from "jsonwebtoken";
+import authMiddleware from "../middleware/auth.middleware";
+import fileService from "../services/fileService";
+import File from "../models/File";
+import User from "../models/User";
 
 const router = Router();
 
@@ -19,13 +22,11 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const errors = validationResult(req);
-
       if (!errors.isEmpty()) {
         return res.status(400).json({ message: "Uncorrect request", errors });
       }
 
       const { email, password } = req.body;
-
       const candidate = await User.findOne({ email });
 
       if (candidate) {
@@ -34,39 +35,38 @@ router.post(
           .json({ message: `User with email ${email} already exists` });
       }
 
-      const hashPassword = await bcrypt.hash(password, 5);
+      const hashPassword = await bcrypt.hash(password, 8);
       const user = new User({ email, password: hashPassword });
       await user.save();
 
-      return res.json({ message: "User was created" });
+      await fileService.createDir(new File({ user: user.id, name: "" }));
+      res.json({ message: "User was created" });
     } catch (e) {
       console.log(e);
-      res.status(500).send({ message: "Server error" });
+      res.send({ message: "Server error" });
     }
   }
 );
 
 router.post("/login", async (req: Request, res: Response) => {
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ message: "Uncorrect request", errors });
-    }
-
     const { email, password } = req.body;
-
     const user = await User.findOne({ email });
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+
     const isPassValid = bcrypt.compareSync(password, user.password);
+
     if (!isPassValid) {
       return res.status(400).json({ message: "Invalid password" });
     }
+
     const token = jwt.sign({ id: user.id }, config.get("secretKey"), {
       expiresIn: "1h",
     });
+
     return res.json({
       token,
       user: {
@@ -79,8 +79,31 @@ router.post("/login", async (req: Request, res: Response) => {
     });
   } catch (e) {
     console.log(e);
-    res.status(500).send({ message: "Server error" });
+    res.send({ message: "Server error" });
   }
 });
 
-export default router;
+router.get("/auth", authMiddleware, async (req: any, res: Response) => {
+  try {
+    const user = await User.findOne({ _id: req.user.id });
+    const token = jwt.sign({ id: user.id }, config.get("secretKey"), {
+      expiresIn: "1h",
+    });
+
+    return res.json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        diskSpace: user.diskSpace,
+        usedSpace: user.usedSpace,
+        avatar: user.avatar,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    res.send({ message: "Server error" });
+  }
+});
+
+export = router;

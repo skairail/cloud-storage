@@ -2,15 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import config from "config";
 
-interface AuthenticatedRequest extends Request {
-  user?: any;
-}
-
-const authMiddleware = async (
-  req: AuthenticatedRequest,
-  res: Response,
-  next: NextFunction
-) => {
+const authMiddleware = async (req: any, res: any, next: NextFunction) => {
   if (req.method === "OPTIONS") {
     return next();
   }
