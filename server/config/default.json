@@ -2,6 +2,6 @@
   "serverPort": 5000,
   "dbUrl": "mongodb+srv://<myDatabaseUser>:<password>@cloud.nnemzxc.mongodb.net/?retryWrites=true&w=majority",
   "secretKey": "cloud-secret-key",
-  "filePath": "C:\\Users\\Rado\\Documents\\cloud-storage\\server\\files",
-  "staticPath": "C:\\Users\\Rado\\Documents\\cloud-storage\\server\\static"
+  "filePath": "C:\\Users\\User\\Documents\\cloud-storage\\server\\files",
+  "staticPath": "C:\\Users\\User\\Documents\\cloud-storage\\server\\static"
 }

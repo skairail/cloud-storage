@@ -1,0 +1,10 @@
+# dependencies
+server/node_modules
+
+# dependencies
+client/node_modules
+
+client/dist
+server/files
+server/static
+server/dist
