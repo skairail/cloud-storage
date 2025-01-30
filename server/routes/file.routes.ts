@@ -4,13 +4,15 @@ import fileController from "../controllers/fileController";
 
 const router = Router();
 
-router.post("", authMiddleware, fileController.createDir);
-router.post("/upload", authMiddleware, fileController.uploadFile);
-router.post("/avatar", authMiddleware, fileController.uploadAvatar);
-router.get("", authMiddleware, fileController.getFiles);
-router.get("/download", authMiddleware, fileController.downloadFile);
-router.get("/search", authMiddleware, fileController.searchFile);
-router.delete("/", authMiddleware, fileController.deleteFile);
-router.delete("/avatar", authMiddleware, fileController.deleteAvatar);
+router.use(authMiddleware);
+
+router.post("", fileController.createDir);
+router.post("/upload", fileController.uploadFile);
+router.post("/avatar", fileController.uploadAvatar);
+router.get("", fileController.getFiles);
+router.get("/download", fileController.downloadFile);
+router.get("/search", fileController.searchFile);
+router.delete("/", fileController.deleteFile);
+router.delete("/avatar", fileController.deleteAvatar);
 
 export default router;
